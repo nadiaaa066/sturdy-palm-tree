@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   update-files:
     runs-on: ubuntu-latest
@@ -19,15 +22,15 @@ jobs:
 
       - name: Update README
         run: |
-          echo "### Updated by ${{ github.actor }} on $(date '+%Y-%m-%d %H:%M:%S')" >> README.md
+          echo "### Updated by ${{ github.actor }} on $(date)" >> README.md
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add index.html README.md
+          git add .
 
-          git commit -m "Workflow: Updated HTML and README" || echo "No changes to commit"
+          git commit -m "Workflow update" || exit 0
 
           git push
