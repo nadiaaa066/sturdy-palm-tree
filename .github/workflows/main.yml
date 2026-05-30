@@ -15,4 +15,4 @@ jobs:
 
       - name: Update index.html
         run: |
-         sed -i '/<\/body>/i <p>Updated by ${{ github.actor }} on '"$(date)"'</p>' index.html
+           echo "<p>Updated by ${{ github.actor }} on $(date)</p>" >> index.html
