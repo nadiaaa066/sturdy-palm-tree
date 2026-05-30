@@ -11,8 +11,23 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Update index.html
         run: |
-           echo "<p>Updated by ${{ github.actor }} on $(date)</p>" >> index.html
+          echo "<p>Updated by ${{ github.actor }} on $(date)</p>" >> index.html
+
+      - name: Update README
+        run: |
+          echo "### Updated by ${{ github.actor }} on $(date '+%Y-%m-%d %H:%M:%S')" >> README.md
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add index.html README.md
+
+          git commit -m "Workflow: Updated HTML and README" || echo "No changes to commit"
+
+          git push
